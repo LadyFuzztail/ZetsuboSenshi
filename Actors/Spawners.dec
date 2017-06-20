@@ -1,0 +1,474 @@
+// Monster Spawners
+
+ACTOR ZSZombieManSpawner replaces ZombieMan
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSZombieMan", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSStealthZombieManSpawner replaces StealthZombieMan
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("ZSStealthZombieMan", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSZombieSargeSpawner replaces ShotgunGuy
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSZombieSarge", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSStealthZombieSargeSpawner replaces StealthShotgunGuy
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("ZSStealthZombieSarge", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSZombieCommandoSpawner replaces ChaingunGuy
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSZombieCommando", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSStealthZombieCommandoSpawner replaces StealthChaingunGuy
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSZombieCommando", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSDoomImpSpawner replaces DoomImp
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSDoomImp", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSStealthDoomImpSpawner replaces StealthDoomImp
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSStealthDoomImp", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSPinkieSpawner replaces Demon
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSPinkie", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSPinkieSpectreSpawner replaces Spectre
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSPinkieSpectre", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSStealthPinkieSpawner replaces StealthDemon
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSStealthPinkie", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSCacodemonSpawner replaces Cacodemon
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSCacodemon", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSStealthCacodemonSpawner replaces StealthCacodemon
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSStealthCacodemon", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSPainElementalSpawner replaces PainElemental
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSPainElemental", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSFatsoSpawner replaces Fatso
+{
+	Height 0
+	Radius 0
+	Health 0x7FFFFFFF
+	Monster
+	-countkill
+	+noclip
+	+notdmatch
+	+bossdeath
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSFatso", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Goto Standby
+	Standby:
+		TNT1 A 1
+		loop
+	Death:
+		TNT1 A 1
+		TNT1 A 0 A_BossDeath
+		Stop
+	}
+}
+
+ACTOR ZSStealthFatsoSpawner replaces StealthFatso
+{
+	Height 0
+	Radius 0
+	Health 0x7FFFFFFF
+	Monster
+	-countkill
+	+noclip
+	+notdmatch
+	+bossdeath
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSStealthFatso", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Goto Standby
+	Standby:
+		TNT1 A 1
+		loop
+	Death:
+		TNT1 A 1
+		TNT1 A 0 A_BossDeath
+		Stop
+	}
+}
+
+ACTOR ZSBonerSpawner replaces Revenant
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSBoner", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSStealthBonerSpawner replaces StealthRevenant
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSStealthBoner", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSDickWizardSpawner replaces Archvile
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSDickWizard", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSStealthDickSpawner replaces StealthArchvile
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSStealthDick", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSKnightSpawner replaces HellKnight
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSKnight", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSStealthKnightSpawner replaces StealthHellKnight
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSStealthKnight", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSBaronSpawner replaces BaronOfHell
+{
+	Height 0
+	Radius 0
+	Health 0x7FFFFFFF
+	Monster
+	-countkill
+	+noclip
+	+notdmatch
+	+bossdeath
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSBaron", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Goto Standby
+	Standby:
+		TNT1 A 1
+		loop
+	Death:
+		TNT1 A 1
+		TNT1 A 0 A_BossDeath
+		Stop
+	}
+}
+
+ACTOR ZSStealthBaronSpawner replaces StealthBaron
+{
+	Height 0
+	Radius 0
+	Health 0x7FFFFFFF
+	Monster
+	-countkill
+	+noclip
+	+notdmatch
+	+bossdeath
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSStealthBaron", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Goto Standby
+	Standby:
+		TNT1 A 1
+		loop
+	Death:
+		TNT1 A 1
+		TNT1 A 0 A_BossDeath
+		Stop
+	}
+}
+
+ACTOR ZSCyberdemonSpawner replaces Cyberdemon
+{
+	Height 0
+	Radius 0
+	Health 0x7FFFFFFF
+	Monster
+	-countkill
+	+noclip
+	+notdmatch
+	+bossdeath
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSCyberdemon", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Goto Standby
+	Standby:
+		TNT1 A 1
+		loop
+	Death:
+		TNT1 A 1
+		TNT1 A 0 A_BossDeath
+		Stop
+	}
+}
+
+ACTOR ZSArachnotronSpawner replaces Arachnotron
+{
+	Height 0
+	Radius 0
+	Health 0x7FFFFFFF
+	Monster
+	-countkill
+	+noclip
+	+notdmatch
+	+bossdeath
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSArachnotron", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Goto Standby
+	Standby:
+		TNT1 A 1
+		loop
+	Death:
+		TNT1 A 1
+		TNT1 A 0 A_BossDeath
+		Stop
+	}
+}
+
+ACTOR ZSStealthArachnotronSpawner replaces StealthArachnotron
+{
+	Height 0
+	Radius 0
+	Health 0x7FFFFFFF
+	Monster
+	-countkill
+	+noclip
+	+notdmatch
+	+bossdeath
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSStealthArachnotron", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Goto Standby
+	Standby:
+		TNT1 A 1
+		loop
+	Death:
+		TNT1 A 1
+		TNT1 A 0 A_BossDeath
+		Stop
+	}
+}
+
+ACTOR ZSSpiderMastermindSpawner replaces SpiderMastermind
+{
+	Height 0
+	Radius 0
+	Health 0x7FFFFFFF
+	Monster
+	-countkill
+	+noclip
+	+notdmatch
+	+bossdeath
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSSpiderMastermind", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER|SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSWolfSSSpawner replaces WolfensteinSS
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSWolfSS", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}
+
+ACTOR ZSLostSoulSpawner replaces LostSoul
+{
+	-Solid
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("ZSLostSoul", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERAMBUSHFLAG|SXF_TRANSFERSPECIAL,0,tid)
+		Stop
+	}
+}

@@ -1,0 +1,78 @@
+#library "ZS_Functions"
+#import "ZS_Constants.acs"
+#include "zcommon.acs"
+
+// Math Clamp function, I can't believe nobody bothered to implement this yet. What the fuck was Graf thinking?
+function int clamp (int x, int y, int z) {
+	int value;
+	value = x;
+	if (value < y) {
+		value = y;
+	}
+	if (value > z) {
+		value = z;
+	}
+	return value;
+}
+
+// Retrieve the max shields of a player 
+function int GetMaxShields (void){
+	int ShieldsMax = 25;
+	Return ShieldsMax;
+}
+
+// Overshield Limiter
+function int GetOverShieldLimit (void){
+	int MaxShields = GetMaxShields();
+	int ShieldsLimit = MaxShields + CheckInventory("OverShieldMax");
+	Return ShieldsLimit;
+}
+
+// Retrieve the max armor of a player 
+function int GetMaxArmor (void){
+	int ArmorMax = 100;
+	Return ArmorMax;
+}
+
+// Update Damage Factor from Armor
+function void UpdateDamageFactor (void) {
+	int CurrentArmor = CheckInventory("RealArmor");
+	int CurrentDamageFactor = 100.0 / (100 + CurrentArmor) ;
+	if ( !!CheckInventory("ArmorActive") ) {
+		SetActorProperty(0, APROP_DamageFactor, CurrentDamageFactor);
+	} else {
+		SetActorProperty(0, APROP_DamageFactor, 1.0);
+	}
+	int DefensePercent = ( 100.0 - ( 100 * CurrentDamagefactor - 0.5)) >> 16;
+	int PercentToUpdate;
+	if ( DefensePercent < CheckInventory("ZSDefensePercent") ) {
+		TakeInventory("ZSDefensePercent",1);
+	}
+	while ( DefensePercent > CheckInventory("ZSDefensePercent") ) {
+		GiveInventory("ZSDefensePercent",1);
+	}
+}
+
+// Damage Armor from taking Damage
+function void DamageArmor (int amount) {
+	int fixedamount = amount << 16;
+	int factor = GetActorProperty(0,APROP_DamageFactor);
+	int ApproxRawDamage = FixedDiv(fixedamount,factor);
+	int ArmorDamageFactor = ( CheckInventory("RealArmor") << 16 ) / GetMaxArmor();
+	int ArmorDamageAmount = FixedMul(ApproxRawDamage, ArmorDamageFactor) * 2 / 5;
+	ArmorDamageAmount = ArmorDamageAmount >> 16;
+	If ( ArmorDamageAmount <= 0 ) {
+		ArmorDamageAmount = 1;
+	}
+	TakeInventory("RealArmor", ArmorDamageAmount);
+	UpdateDamageFactor();
+}
+
+// Retrieves Max Health
+function int GetMaxHealth (void) {
+	int HealthMax = GetActorProperty(0,APROP_SpawnHealth);
+	If ( !HealthMax ) {
+		HealthMax = 100;
+	}	
+	return HealthMax;
+}

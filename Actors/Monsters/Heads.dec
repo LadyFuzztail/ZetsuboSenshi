@@ -1,0 +1,11 @@
+ACTOR ZSLostSoul : LostSoul
+{
+//	DropItem ""
+	States
+	{
+	Death:
+		SKUL F 0 A_GiveToTarget("ExpItem", 6)
+		SKUL F 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NoTarget, 4)
+		Goto Super::Death
+	}
+}

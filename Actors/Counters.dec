@@ -1,0 +1,22 @@
+ACTOR Counter : Inventory { -Invbar +Inventory.Undroppable +Inventory.HubPower }
+
+ACTOR ZSDefensePercent : Counter { Inventory.MaxAmount 99 Inventory.InterhubAmount 99 }
+ACTOR ExpItem : Counter { Inventory.MaxAmount 0x7FFFFFFF Inventory.InterhubAmount 0x7FFFFFFF }
+ACTOR HealthMaxTotal : Counter { Inventory.MaxAmount 999 Inventory.InterHubAmount 999 }
+ACTOR ShieldRecharged : Counter { Inventory.MaxAmount 1 Inventory.InterHubAmount 1 }
+ACTOR OverShieldToken : Counter { Inventory.MaxAmount 1 Inventory.InterhubAmount 1 }
+ACTOR OverShieldCounter : Counter { Inventory.MaxAmount 999 Inventory.InterHubAmount 999 }
+ACTOR OverShieldMax : Counter { Inventory.MaxAmount 999 Inventory.InterHubAmount 999 }
+ACTOR ArmorClassCounter : Counter { Inventory.MaxAmount 999 Inventory.InterHubAmount 999 }
+ACTOR ArmorPercentCounter : Counter { Inventory.MaxAmount 256 Inventory.InterHubAmount 256 }
+ACTOR ArmorMaxTotal : Counter { Inventory.MaxAmount 999 Inventory.InterHubAmount 999 }
+ACTOR ArmorActive : Counter { Inventory.MaxAmount 1 Inventory.InterHubAmount 1 }
+ACTOR ExpLv : Counter { Inventory.MaxAmount 60 Inventory.InterHubAmount 60 }
+ACTOR ExpNext : Counter { Inventory.MaxAmount 0x7FFFFFFF Inventory.InterHubAmount 0x7FFFFFFF }
+ACTOR ExpPercent : Counter { Inventory.MaxAmount 256 Inventory.InterHubAmount 256 }
+ACTOR PreceptEnergy : Counter { Inventory.MaxAmount 999 Inventory.InterHubAmount 999 }
+ACTOR PreceptMax : Counter { Inventory.MaxAmount 999 Inventory.InterHubAmount 999 }
+ACTOR PreceptPercent : Counter { Inventory.MaxAmount 256 Inventory.InterHubAmount 256 }
+ACTOR IsUltDoom : Counter { Inventory.MaxAmount 1 Inventory.InterhubAmount 1 }
+ACTOR IsDoom2 : Counter { Inventory.MaxAmount 1 Inventory.InterhubAmount 1 }
+ACTOR IDFAFlag : Counter { Inventory.MaxAmount 1 Inventory.InterhubAmount 1 }

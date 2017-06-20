@@ -1,0 +1,11 @@
+#library "ZS_Constants"
+#include "zcommon.acs"
+
+#LibDefine 	EXP_SCALE	32
+#LibDefine	GAME_DOOM	1
+#LibDefine	GAME_DOOM2	2
+
+int ShieldsGiven[4];
+int ShieldsToGive[4];
+int ArmorToGive[4];
+int HealthToGive[4];

@@ -1,0 +1,35 @@
+ACTOR ZSDoomImp : DoomImp
+{
+//	DropItem "Magic" // 
+	States
+	{
+	Death:
+		TROO I 0 A_GiveToTarget("ExpItem", 4)
+		TROO I 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NOTARGET, 2)
+		Goto Super::Death
+	XDeath:
+		TROO N 0 A_GiveToTarget("ExpItem", 8)
+		TROO N 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NOTARGET, 5)
+		Goto Super::Death
+	}
+}
+
+ACTOR ZSStealthDoomImp : StealthDoomImp
+{ 
+	+STEALTH
+	RenderStyle Translucent
+	Alpha 0
+	Obituary "$OB_STEALTHIMP"
+	HitObituary "$OB_STEALTHIMP"
+	States
+	{
+	Death:
+		TROO I 0 A_GiveToTarget("ExpItem", 6)
+		TROO I 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NOTARGET, 4)
+		Goto DoomImp::Death
+	XDeath:
+		TROO N 0 A_GiveToTarget("ExpItem", 12)
+		TROO N 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NOTARGET, 7)
+		Goto DoomImp::Death
+	}
+} 

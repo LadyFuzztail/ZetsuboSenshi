@@ -1,0 +1,236 @@
+#library "ZS_Suit"
+#import "ZS_Constants.acs"
+#import "ZS_Functions.acs"
+#include "zcommon.acs"
+
+// Replaces cheat armor with the proper type
+Script "CheatAdapter" Enter {
+	if ( GetArmorInfo(ARMORINFO_SAVEPERCENT) != 65536 && GetArmorInfo(ARMORINFO_SAVEPERCENT) != 0) {
+		TakeInventory("Armor",9999);
+		TakeInventory("RealArmor",9999);
+		GiveInventory("ShieldArmor",GetMaxShields()+25);
+		GiveInventory("IDFAFlag",1);
+		ArmorToGive[PlayerNumber()] = GetMaxArmor()+100;
+	}
+	Delay(1);
+	Restart;
+}
+
+// Debug Script
+/*	Script "ArmorChecker" Enter {
+	HudMessage(s:"Armor Save Amount: ", i:getarmorinfo(armorinfo_savepercent);
+	HUDMSG_FADEOUT,1,CR_WHITE,0.5,0.9,1.0,0.95);
+	Delay(1);
+	restart;
+}	*/
+
+// Gives Overshields
+Script "OverShieldGiver" Enter {
+	If ( CheckInventory("Armor") < GetOverShieldLimit() && !!ShieldsToGive[PlayerNumber()] ) {
+		GiveInventory("ShieldArmor",1);
+		--ShieldsToGive[PlayerNumber()];
+	} else {
+		ShieldsToGive[PlayerNumber()] = 0;
+	}
+	Delay(1);
+	Restart;
+}
+
+// Shield Recharging
+Script "ZSShields" Enter {
+	int MaxShields = GetMaxShields();
+	if (ShieldsGiven[PlayerNumber()] == 0) {
+		while (CheckInventory("Armor") < MaxShields) {
+			GiveInventory("ShieldArmor", 1 );
+			Delay(1);
+		}
+		ShieldsGiven[PlayerNumber()] = 1;
+	}
+	int RechargeDelay;
+	int OldShieldAmount;
+	int NewShieldAmount;
+	int ShieldTics;
+	int ShieldGiveAmount;
+	int CurrentHealth;
+	int LastHealth;
+	CurrentHealth = GetActorProperty(0,APROP_Health);
+	NewShieldAmount = CheckInventory("Armor");
+	if (CheckInventory("Armor") >= MaxShields || NewShieldAmount < OldShieldAmount || CurrentHealth < LastHealth ) {
+		RechargeDelay = 0;
+		ShieldTics = 0;
+	} else if ( RechargeDelay >= 84 ) {
+		ShieldTics = ShieldTics + (25 + (2 * MaxShields ));
+		ShieldGiveAmount = ShieldTics / 350;
+		GiveInventory("ShieldArmor", ShieldGiveAmount);
+		ShieldTics = ShieldTics % 350;
+	} else {
+		RechargeDelay++;
+	}
+	OldShieldAmount = CheckInventory("Armor");
+	LastHealth = CurrentHealth;
+
+	Delay(1);
+	restart;
+}
+
+// Shield Gate Checks and Protects Health
+Script "ShieldGating" Enter {
+	int CurrentHealth = GetActorProperty(0,Aprop_Health);
+	int LastHealth;
+	
+	If ( CheckInventory("Armor") >= GetMaxShields() ) {
+		GiveInventory("ShieldRecharged",1);
+	}
+	If ( !!CheckInventory("ShieldRecharged") ) {
+		GiveInventory("ShieldGate",1);
+		TakeInventory("ArmorActive",1);
+		If ( CurrentHealth < LastHealth ) {
+			GiveInventory("Health", LastHealth - CurrentHealth);
+		}
+	}
+	If ( !CheckInventory("Armor") ) {
+		TakeInventory("PowerShieldGate",1);
+		TakeInventory("ShieldRecharged",1);
+		GiveInventory("ArmorActive",1);
+	}
+	
+	LastHealth = GetActorProperty(0,Aprop_health);
+	UpdateDamageFactor();
+	delay(1);
+	Restart;
+}
+
+// Adds Armor to the give stack
+Script "PickupArmor" (int amount) {	
+	int MaxArmor = GetMaxArmor();
+	ArmorToGive[PlayerNumber()] += amount;
+	if ( ArmorToGive[PlayerNumber()] > MaxArmor ) {
+		ArmorToGive[PlayerNumber()] = MaxArmor;
+	}
+}
+
+// Gives Armor from the stack
+Script "ArmorGiver" Enter {
+	If ( CheckInventory("IDFAFlag") ) {
+		GiveInventory("RealArmor", ArmorToGive[PlayerNumber()]);
+		TakeInventory("IDFAFlag", 1);
+	} else If ( CheckInventory("RealArmor") < GetMaxArmor() && !!ArmorToGive[PlayerNumber()] ) {
+			GiveInventory("RealArmor",1);
+			--ArmorToGive[PlayerNumber()];
+		} else {
+			ArmorToGive[PlayerNumber()] = 0;
+		}
+	UpdateDamageFactor();
+//	Hudmessage(s:"Armor: ", d:CheckInventory("RealArmor"), s:" | Protection %: ", f:FixedMul(100.0, 1.0 - GetActorProperty(0, APROP_DamageFactor));
+//	HUDMSG_FADEOUT,1,CR_WHITE,0.5,0.9,1.0,0.95);
+	
+	Delay(1);
+	Restart;
+}
+
+// Detects damage to Shields and Health, then Damages Armor if Damage is detected
+Script "DetectDamage" Enter {
+	int LastHealth;
+	int CurrentHealth;
+	int LastShields;
+	int CurrentShields;
+	int HealthDamageTaken;
+	int ShieldsDamageTaken;
+	int TotalDamageTaken;
+	CurrentHealth = GetActorProperty(0,APROP_Health);
+	CurrentShields = CheckInventory("Armor");
+	HealthDamageTaken = LastHealth - CurrentHealth;
+	ShieldsDamageTaken = LastShields - CurrentShields;
+	If ( HealthDamageTaken < 0 ) { 
+		HealthDamageTaken = 0; 
+	}
+	If ( ShieldsDamageTaken < 0 ) { 
+		ShieldsDamageTaken = 0; 
+	}
+	If ( !CheckInventory("ShieldRecharged") ) { 
+		TotalDamageTaken = HealthDamageTaken + ShieldsDamageTaken;
+	}
+	If ( !!TotalDamageTaken ) {
+		DamageArmor(TotalDamageTaken);
+	}
+	LastShields = CurrentShields;
+	LastHealth = CurrentHealth;
+	Delay(1);
+	Restart;
+}
+
+// Adds health to the stack to add, and fakes low health messages from pickup
+Script "PickupHealth" (int amount, int message) {
+	int MessageIndex;
+	str HealthMessages[4] = {
+		"\cgGot a Medikit!",
+		"\cgGot a Large Medikit!",
+		"\cgGot a Medikit that you really need!",
+		"\cgGot a Large Medikit that you really need!",
+	};
+	If ( amount > 40 ) MessageIndex += 1;
+	If ( GetActorProperty(0,APROP_Health) < amount ) MessageIndex += 2;
+	If ( !!Message ) Log(s:HealthMessages[MessageIndex]);
+	
+	HealthToGive[PlayerNumber()] += amount;
+}
+
+// Gives Health from stack, and redirects extra health over max to overshields with lowered efficiency
+Script "HealthGiver" Enter {
+	int CurrentHealth = GetActorProperty(0, APROP_Health);
+	int RedirectTics;
+	int ShieldRedirectAmount;
+	If ( !!HealthToGive[PlayerNumber()] ) {
+		If ( CurrentHealth < GetMaxHealth() ) {
+			GiveInventory("Health",1);
+			--HealthToGive[PlayerNumber()];
+		} else {
+			RedirectTics += 25;
+			ShieldRedirectAmount = RedirectTics / 100;
+			ShieldstoGive[PlayerNumber()] += ShieldRedirectAmount;
+			RedirectTics = RedirectTics % 100;
+			--HealthToGive[PlayerNumber()];
+		}
+	}
+//	HudMessage(s:"MaxHealth: ", d:GetMaxHealth(), s:" | Redirect Tics: ", d:RedirectTics, s:" | Shields to Give: ", d:ShieldsToGive[PlayerNumber()], s:" ", d:CheckInventory("OverShieldMax") ;
+//	HUDMSG_FADEOUT, 1, CR_WHITE, 0.5, 0.9, 1.0, 0.95);
+	Delay(1);
+	Restart;
+}
+
+//	Analytics
+
+Script "ExpSystem" Enter {
+	int PlayerExp;
+	int PlayerExpOld;
+	int PlayerLv;
+	int PlayerNextLevel;
+	int PlayerNextPercent;
+	int PlayerNextProgress;
+	PlayerExp = CheckInventory("ExpItem");
+	PlayerNextLevel = CheckInventory("ExpNext");
+	If ( PlayerExp != PlayerExpOld ){
+		PlayerLv = sqrt( PlayerExp / EXP_SCALE );
+		While ( PlayerLv > CheckInventory("ExpLv") ) {
+			GiveInventory("ExpLv", 1);
+		}
+		PlayerNextProgress = CheckInventory("ExpItem") - ( CheckInventory("ExpLv")*CheckInventory("ExpLv") * EXP_SCALE);
+		PlayerNextPercent = ( PlayerNextProgress * 256 ) / ( ( 2 * CheckInventory("ExpLv") + 1) * EXP_SCALE );
+		While ( PlayerNextPercent > CheckInventory("ExpPercent")) {
+			GiveInventory("ExpPercent",1);
+		}
+		While ( PlayerNextPercent < CheckInventory("ExpPercent")) {
+			TakeInventory("ExpPercent",1);
+		}
+	}
+	PlayerNextLevel = (PlayerLv * PlayerLv + 2 * PlayerLv + 1) * EXP_SCALE;
+	While ( PlayerNextLevel > CheckInventory("ExpNext")) {
+		GiveInventory("ExpNext",1);
+	}
+	While ( PlayerNextLevel < CheckInventory("ExpNext")) {
+		TakeInventory("ExpNext",1);
+	}
+	PlayerExpOld = PlayerExp;
+	Delay(1);
+	Restart;
+}

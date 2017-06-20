@@ -1,0 +1,113 @@
+// Armor to be used as Shields
+
+ACTOR ShieldArmor : BasicArmorBonus
+{
+	Inventory.Icon "ARM2A0" /*Will edit this later*/
+	Armor.SavePercent 100.0
+	Armor.SaveAmount 1
+	Armor.MaxSaveAmount 9999
+}
+
+// Actual armor that will be just custom inventory items that control damage reduction.
+
+ACTOR RealArmor : Inventory
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 9999
+	+IgnoreSkill
+	-InvBar
+}
+
+ACTOR ZSArmorBits : RandomSpawner replaces ArmorBonus
+{
+	DropItem "ArmorShardGreen", 255, 20
+	DropItem "ArmorShardBlue", 255, 4
+	DropItem "ArmorShardRed", 255, 1
+}
+
+ACTOR ArmorShardGreen : CustomInventory
+{
+	Scale 0.5
+	FloatSpeed 8
+	Radius 20
+	Height 12
+	Inventory.PickupMessage "$GOTARMBONUS"
+	Inventory.Icon "ARM1A0"
+	+FloatBob
+	+Nogravity
+	+CountItem
+	+Inventory.AlwaysPickUp
+	States
+	{
+	Spawn:
+		ASHG ABCDEFGH 5
+		Loop
+	Pickup:
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupArmor",0,1)
+		Stop
+  }
+}
+
+ACTOR ArmorShardBlue : ArmorShardGreen
+{
+	States
+	{
+	Spawn:
+		ASHB ABCDEFGH 5
+		Loop
+	Pickup:
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupArmor",0,2)
+		Stop
+	}
+}
+
+ACTOR ArmorShardRed : ArmorShardGreen
+{
+	States
+	{
+	Spawn:
+		ASHR ABCDEFGH 5
+		Loop
+	Pickup:
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupArmor",0,5)
+		Stop
+	}
+}
+
+ACTOR ZSArmorMed : ArmorShardGreen replaces GreenArmor
+{
+	Scale 1.0
+	Inventory.PickupMessage "$GOTARMOR"
+	Inventory.Icon "ARM1A0"
+	-FloatBob
+	-Nogravity
+	States
+	{
+	Spawn:
+		ARM1 A 6
+		ARM1 B 6 Bright
+		Loop
+	Pickup:
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupArmor",0,20)
+		Stop	
+	}
+}
+
+ACTOR ZSArmorLarge : ArmorShardGreen replaces BlueArmor
+{
+	Scale 1.0
+	Inventory.PickupMessage "$GOTMEGA"
+	Inventory.Icon "ARM2A0"
+	-FloatBob
+	-Nogravity
+	States
+	{
+	Spawn:
+		ARM2 A 6
+		ARM2 B 6 Bright
+		Loop
+	Pickup:
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupArmor",0,40)
+		Stop	
+	}
+}

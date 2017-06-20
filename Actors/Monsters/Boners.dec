@@ -1,0 +1,47 @@
+ACTOR ZSBoner : Revenant
+{
+//	DropItem ""
+	States
+	{
+	Death:
+		SKEL L 0 A_GiveToTarget("ExpItem", 60)
+		SKEL L 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NoTarget, 36)
+		Goto Super::Death
+	}
+}
+
+ACTOR ZSStealthBoner : StealthRevenant
+{
+//	DropItem ""
+	States
+	{
+	Death:
+		SKEL L 0 A_GiveToTarget("ExpItem", 96)
+		SKEL L 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NoTarget, 58)
+		Goto Revenant::Death
+	}
+}
+
+ACTOR ZSDickWizard : Archvile
+{
+//	DropItem ""
+	States
+	{
+	Death:
+		VILE Q 0 A_GiveToTarget("ExpItem", 140)
+		VILE Q 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NoTarget, 84)
+		Goto Super::Death
+	}
+}
+
+ACTOR ZSStealthDick : StealthArchvile
+{
+//	DropItem ""
+	States
+	{
+	Death:
+		VILE Q 0 A_GiveToTarget("ExpItem", 350)
+		VILE Q 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NoTarget, 210)
+		Goto Archvile::Death
+	}
+}

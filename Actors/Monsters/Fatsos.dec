@@ -1,0 +1,33 @@
+ACTOR ZSFatso : Fatso
+{
+//	DropItem ""
+	States
+	{
+	Death:
+		FATT J 0 A_GiveToTarget("ExpItem", 54)
+		FATT J 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NoTarget, 32)
+		FATT K 6
+		FATT L 6 A_Scream
+		FATT M 6 A_NoBlocking
+		FATT NOPQRS 6
+		FATT T -1 A_Killmaster
+		Stop
+	}
+}
+
+ACTOR ZSStealthFatso : StealthFatso
+{
+//	DropItem ""
+	States
+	{
+	Death:
+		FATT G 0 A_GiveToTarget("ExpItem", 86)
+		FATT G 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NoTarget, 52)
+		FATT K 6
+		FATT L 6 A_Scream
+		FATT M 6 A_NoBlocking
+		FATT NOPQRS 6
+		FATT T -1 A_Killmaster
+		Stop
+	}
+}

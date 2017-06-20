@@ -1,0 +1,71 @@
+ACTOR ZSBerserk : CustomInventory replaces Berserk
+{
+	Inventory.PickupMessage "$GOTBERZERK"
+	Inventory.PickupSound "misc/p_pkup"
+	+CountItem
+	+inventory.AlwaysPickup
+	States
+	{
+	Spawn:
+		PSTR A -1
+		Stop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("PowerStrength")
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupHealth",0,50)
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupArmor",0,10)
+		TNT1 A 0 A_SelectWeapon("Fist")
+		Stop
+	}
+}
+
+ACTOR ZSSoulSphere : CustomInventory replaces SoulSphere
+{
+	Inventory.PickupMessage "$GOTSUPER"
+	Inventory.PickupSound "misc/p_pkup"
+	+CountItem
+	+Inventory.AutoActivate
+	+inventory.AlwaysPickup
+	+Inventory.FancyPickupSound
+	States
+	{
+	Spawn:
+		SOUL ABCDCB 6 Bright
+		Loop
+	Pickup:
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupHealth",0,100)
+		Stop
+	}
+}
+
+ACTOR ZSMegaSphere : CustomInventory replaces MegaSphere
+{
+	Inventory.PickupMessage "$GOTMSPHERE"
+	Inventory.PickupSound "misc/p_pkup"
+	+CountItem
+	+Inventory.AutoActivate
+	+inventory.AlwaysPickup
+	+Inventory.FancyPickupSound
+	States
+	{
+	Spawn:
+		MEGA ABCD 6 Bright
+		Loop
+	Pickup:
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupHealth",0,200)
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupArmor",0,40)
+		Stop
+	}
+}
+
+ACTOR PowerShieldGate : PowerBuddha
+{
+	Powerup.Duration 0x7FFFFFFF
+}
+
+ACTOR ShieldGate : PowerupGiver
+{
+	Powerup.Color None /*BlueMap, 0.25*/
+	Powerup.Type "ShieldGate"
+	Inventory.MaxAmount 0
+	+Inventory.AutoActivate
+}

@@ -1,0 +1,127 @@
+base Doom;
+height 32;
+Resolution 636, 480;
+completeborder true;
+//	MonoSpacefonts false, "0";
+
+statusbar fullscreen, forcescaled|fullscreenoffsets
+{
+	drawimage "HPHUD", 4, 1;
+	drawimage "ANAHUD", -260,1;
+	drawimage "ABLEHUD", 4,-49;
+	drawimage "ARMSHUD", -196, -49;
+
+//	HP bar stuff	
+	drawbar "REDBRS", "HPBRES", health, horizontal, interpolate(8), 56, 22;
+	drawnumber 3, Corpfont, red, health, interpolate(8)|drawshadow, 106, 0;
+	InInventory OverShieldToken, 1 {
+		Drawimage "LITBRS", 120, 22;
+	}
+	Else {
+		drawbar "BLUBRS", "SHLDBRS", armor (25), Horizontal, interpolate(8), 120, 22;
+	}
+	drawnumber 3, Corpfont, TrueBlue, armor, interpolate(8)|drawshadow, 170, 0, TrueBlue, 25, cyan, 25;
+	drawbar "ACBRS", "ACBRES", ArmorPercentCounter, horizontal, interpolate(8), 52, 42;
+	drawnumber 2, corpfont, gold, ArmorClassCounter, drawshadow, 118, 20;
+	drawnumber 3, cfontsml, gold, ZSDefensePercent, interpolate(6)|DrawShadow, 144, 30;
+	drawstring cfontsml, gold, "%", 154, 30, 0, drawshadow;
+	
+// Analytics bar stuff
+	drawbar "WHTBRLFS", "WHTBRLES", ExpPercent, horizontal, reverse|interpolate(8), -184, 42;
+	drawnumber 5, cfontsml, untranslated, expitem, interpolate(256)|drawshadow, -114, 30;
+	drawstring cfontsml, untranslated, "/", -104, 30, 0, drawshadow;
+	drawnumber 5, cfontsml, untranslated, ExpNext, interpolate(128)|drawshadow, -58, 30;
+	drawnumber 2, Sfontbig, untranslated, ExpLv, -8, 25;
+	drawbar "WHTBRSFS", "WHTBRSES", kills, horizontal, reverse|interpolate(8), -127, 13;
+	drawnumber 4, cfontsml, untranslated, kills, interpolate(8)|drawshadow, -104, 1;
+	drawstring cfontsml, untranslated, "/", -96, 1, 0, drawshadow;
+	drawnumber 4, cfontsml, untranslated, monsters, interpolate(32)|drawshadow, -62, 1;
+	drawbar "WHTBRSFS", "WHTBRSES", secrets, horizontal, reverse|interpolate(8), -125, 22;
+	drawnumber 2, cfontsml, untranslated, secrets, interpolate(8)|drawshadow, -84, 11;
+	drawstring cfontsml, untranslated, "/", -76, 11, 0, drawshadow;
+	drawnumber 2, cfontsml, untranslated, totalsecrets, interpolate(8)|drawshadow, -60, 11;
+	InInventory IsUltDoom, 1 {
+		drawstring cmapfont, untranslated, levellump, -192, 0, 0, alignment(left)|drawshadow;
+	} else {
+		drawstring cma2font, untranslated, levellump, -192, 0, 0, alignment(left)|drawshadow;
+	}
+	Alpha 0.857143 {
+		drawstring cfontsml, untranslated, levelname, -256, 21, 0, alignment(left)|drawshadow;
+	}
+// Arms bar stuff
+	UsesAmmo {
+		drawbar "WHTBRLFS", "WHTBRLES", ammo1, horizontal, reverse|interpolate(25), -184, -7;
+		drawnumber 4, corpfont, untranslated, ammo1, interpolate(25)|drawshadow, -52, -31;
+	}
+	drawstring cfontsml, untranslated, weapontag, -86, -43, 0, drawshadow;
+}
+
+statusbar normal // Standard Doom Status bar
+{
+    drawimage "STBAR", 158, 448;
+    drawimage "STTPRCNT", 248, 451;
+    drawimage "STTPRCNT", 379, 451;
+    drawnumber 3, HUDFONT_DOOM, untranslated, ammo1, interpolate(25), 202, 451;
+    drawnumber 3, HUDFONT_DOOM, untranslated, health, interpolate(8), 248, 451;
+	drawstring smallfont, lightblue, "+", 236, 462;
+	drawnumber 3, smallfont, lightblue, armor, interpolate(6), 259, 462;
+	drawstring smallfont, gold, "Exp: ", 218, 439;
+	drawnumber 6, smallfont, gold, ExpItem, fillzeros|interpolate(8), 259, 439;
+    drawnumber 3, HUDFONT_DOOM, untranslated, realarmor, interpolate(8), 379, 451;
+	drawstring smallfont, gold, "Def% ", 378, 462;
+	drawnumber 2, smallfont, gold, ZSDefensePercent, interpolate(6), 390, 462;
+	drawstring sfontsml, untranslated, "The quick brown fox jumps over the lazy dog.", 318, 16, 0,alignment(center);
+	drawstring sfontsml, cyan, "1234567890", 318, 32, 0,alignment(center);
+	
+	Alpha 0.75
+	{
+		drawstring SMALLFONT, white, "Kills: ", -51, 423, 0, alignment(left);
+		DrawNumber 4, SMALLFONT, white, kills, 30, 423;
+		drawstring SMALLFONT, white, "/", 42, 423;
+		drawnumber 4, SMALLFONT, white, monsters, Alignment(Left), 45, 423;
+		drawbar "WHITBR", "GRAYBR", kills, horizontal, interpolate(6), -50, 431;
+		
+		drawstring SMALLFONT, white, "Secrets: ", -51, 435, 0, alignment(left);
+		drawnumber 2, SMALLFONT, white, secrets, 30, 435;
+		drawstring SMALLFONT, white, "/", 42, 435;
+		drawnumber 2, SMALLFONT, white, totalsecrets, Alignment(Left), 45, 435;
+		drawbar "WHITBR", "GRAYBR", secrets, horizontal, interpolate(6), -50, 443;
+	}
+
+    //keys
+    drawswitchableimage keyslot 2 && 5, "nullimage", "STKEYS0", "STKEYS3", "STKEYS6", 397, 451;
+    drawswitchableimage keyslot 3 && 6, "nullimage", "STKEYS1", "STKEYS4", "STKEYS7", 397, 461;
+    drawswitchableimage keyslot 1 && 4, "nullimage", "STKEYS2", "STKEYS5", "STKEYS8", 397, 471;
+
+    drawnumber 3, INDEXFONT, gold, ammo Clip, interpolate(8), 446, 453;
+    drawnumber 3, INDEXFONT, gold, ammo Shell, interpolate(8), 446, 459;
+    drawnumber 3, INDEXFONT, gold, ammo RocketAmmo, interpolate(8), 446, 465;
+    drawnumber 3, INDEXFONT, gold, ammo Cell, interpolate(8), 446, 471;
+
+    drawnumber 3, INDEXFONT, gold, ammocapacity Clip, 472, 453;
+    drawnumber 3, INDEXFONT, gold, ammocapacity Shell, 472, 459;
+    drawnumber 3, INDEXFONT, gold, ammocapacity RocketAmmo, 472, 465;
+    drawnumber 3, INDEXFONT, gold, ammocapacity Cell, 472, 471;
+    gamemode deathmatch, teamgame
+    {
+        drawnumber 2, HUDFONT_DOOM, untranslated, frags, 296, 451;
+    }
+    gamemode cooperative, singleplayer
+    {
+        drawimage "STARMS", 262, 448;
+        drawswitchableimage weaponslot 2, "STGNUM2", "STYSNUM2", 269, 452; 
+        drawswitchableimage weaponslot 3, "STGNUM3", "STYSNUM3", 281, 452;
+        drawswitchableimage weaponslot 4, "STGNUM4", "STYSNUM4", 293, 452;
+        drawswitchableimage weaponslot 5, "STGNUM5", "STYSNUM5", 269, 462;
+        drawswitchableimage weaponslot 6, "STGNUM6", "STYSNUM6", 281, 462;
+        drawswitchableimage weaponslot 7, "STGNUM7", "STYSNUM7", 293, 462;
+    }
+    gamemode cooperative, deathmatch, teamgame
+    {
+        drawimage translatable "STFBANY", 302, 449;
+    }
+    drawselectedinventory alternateonempty, INDEXFONT, 301, 448
+    {
+        drawmugshot 5, 301, 448;
+    }
+}

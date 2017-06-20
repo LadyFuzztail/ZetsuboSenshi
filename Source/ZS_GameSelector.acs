@@ -1,0 +1,9 @@
+#library "G_Select"
+#import "ZS_HUD.acs"
+#import "ZS_Constants.acs"
+#include "Zcommon.acs"
+
+function int GameModeSelect (void) {
+	Return GAME_DOOM;
+//	Return GAME_DOOM2;
+}

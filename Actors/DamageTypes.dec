@@ -1,0 +1,22 @@
+//Defines damage types that bypasses shields
+
+DamageType Poison
+{
+	NoArmor
+}
+
+DamageType Viral
+{
+	NoArmor
+}
+
+DamageType Plague
+{
+	NoArmor
+}
+
+DamageType SlashProc
+{
+	NoArmor
+	ReplaceFactor
+}

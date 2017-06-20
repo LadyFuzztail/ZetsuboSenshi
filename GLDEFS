@@ -1,0 +1,35 @@
+flickerlight2 GreenShard {
+	color	0.25 0.5 0.0
+	size	48
+	secondarysize	60
+	offset	0 20 0
+	attenuate	1
+}
+
+object ArmorShardGreen 	{
+	frame 	ASHG	{ light GreenShard }
+}
+
+flickerlight2 BlueShard {
+	color	0.0 0.25 0.5
+	size	48
+	secondarysize	60
+	offset	0 20 0
+	attenuate	1
+}
+
+object ArmorShardBlue 	{
+	frame 	ASHB	{ light BlueShard }
+}
+
+flickerlight2 RedShard {
+	color	0.5 0.12 0.12
+	size	48
+	secondarysize	60
+	offset	0 20 0
+	attenuate	1
+}
+
+object ArmorShardRed 	{
+	frame 	ASHR	{ light RedShard }
+}

@@ -1,0 +1,79 @@
+#library "ZS_HUD"
+#import "ZS_Functions.acs"
+#import "ZS_Constants.acs"
+#import "ZS_GameSelector.acs"
+#include "ZCommon.acs"
+
+Script "HUD_Overshield" Enter {
+
+//	Overshield Stuff
+	int Overshieldamount;
+//	int OvershieldToken;
+//	OvershieldToken = CheckInventory("OverShieldToken");	
+//	HudMessage(s:"OvershieldToken : ", d:OverShieldToken[PlayerNumber()];
+//		HUDMSG_FADEOUT,1, CR_White, 0.5, 0.9, 1.0, 1.0);
+	if (CheckInventory("Armor") > GetMaxShields()){
+		GiveInventory("OverShieldToken",1);
+		
+		Overshieldamount = CheckInventory("Armor") - GetMaxShields();
+		While ( OverShieldAmount > CheckInventory("OverShieldCounter")) {
+			GiveInventory("OverShieldCounter",1);
+		}
+		While ( OverShieldAmount < CheckInventory("OverShieldCounter")) {
+			TakeInventory("OverShieldCounter",1);
+		}
+	}
+	else {
+		TakeInventory("OverShieldToken",1);
+	}
+	delay(1);
+	Restart;
+}
+
+Script "HUD_ArmorClass" Enter {
+
+//	Armor > Armor Class Conversion
+	int RealArmorAmount;
+	int ArmorClass;
+	RealArmorAmount = CheckInventory("RealArmor");
+	ArmorClass = ( RealArmorAmount + 2 ) / 5;
+	While ( ArmorClass > CheckInventory("ArmorClassCounter")) {
+		GiveInventory("ArmorClassCounter",1);
+	}
+	While ( ArmorClass < CheckInventory("ArmorClassCounter")) {
+		TakeInventory("ArmorClassCounter",1);
+	}
+
+//	Gets Armor Percent
+	int FixedRealArmorAmount;
+	int RealArmorPercent;
+//	RealArmorAmount[PlayerNumber()] = CheckInventory("RealArmor");
+
+	FixedRealArmorAmount = RealArmorAmount << 16;
+	RealArmorPercent = (((FixedRealArmorAmount / GetMaxArmor()) * 256  ) + 0.5 ) >> 16;
+	
+	While ( clamp(RealArmorPercent, 0, 256) > CheckInventory("ArmorPercentCounter") ) {
+		GiveInventory("ArmorPercentCounter",1);
+	}
+	While ( clamp(RealArmorPercent, 0, 256) < CheckInventory("ArmorPercentCounter") ) {
+		TakeInventory("ArmorPercentCounter",1);
+	}
+	
+	Delay(1);
+	Restart;
+}
+
+Script "Game_Check" Enter {
+	TakeInventory("IsUltDoom", 1);
+	TakeInventory("IsDoom2", 1);
+	int GMode = GameModeSelect();
+	If ( GMode == 1 ) {
+		GiveInventory("IsUltDoom",1);
+//		HudMessage(s:"Ultimate Doom";
+//			HUDMSG_FADEOUT,1, CR_White, 0.5, 0.9, 1.0, 1.0);
+	} else {
+		GiveInventory("IsDoom2", 1);
+//		HudMessage(s:"Doom 2";
+//			HUDMSG_FADEOUT,1, CR_White, 0.5, 0.9, 1.0, 1.0);
+	}
+}

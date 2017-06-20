@@ -1,0 +1,104 @@
+ACTOR ZSZombieMan : ZombieMan
+{
+	DropItem "Clip" // Adding this to be edited later
+	States
+	{
+	Death:
+		POSS H 0 A_GiveToTarget("ExpItem", 1)
+		POSS H 0 
+		Goto Super::Death
+	XDeath:
+		POSS M 0 A_GiveToTarget("ExpItem", 2)
+		POSS M 0 A_RadiusGive("ExpItem", 1600, RGF_PLAYERS|RGF_NOSIGHT|RGF_NOTARGET, 1)
+		Goto Super::XDeath
+	}
+}
+
+ACTOR ZSStealthZombieMan : StealthZombieMan
+{ 
+	+STEALTH
+	RenderStyle Translucent
+	Alpha 0
+	Obituary "$OB_STEALTHZOMBIE"
+	States
+	{
+	Death:
+		POSS H 0 A_GiveToTarget("ExpItem", 2)
+		POSS H 0 A_RadiusGive("ExpItem", 1600, RGF_PLAYERS|RGF_NOSIGHT|RGF_NOTARGET, 1)
+		Goto ZombieMan::Death
+	XDeath:
+		POSS M 0 A_GiveToTarget("ExpItem", 3)
+		POSS M 0 A_RadiusGive("ExpItem", 1600, RGF_PLAYERS|RGF_NOSIGHT|RGF_NOTARGET, 2)
+		Goto ZombieMan::XDeath
+	}
+}
+
+ACTOR ZSZombieSarge : ShotgunGuy
+{
+	DropItem "Shotgun" // Adding this to be edited later
+	States
+	{
+	Death:
+		SPOS H 0 A_GiveToTarget("ExpItem", 4)
+		SPOS H 0 A_RadiusGive("ExpItem", 1600, RGF_PLAYERS|RGF_NOSIGHT|RGF_NOTARGET, 3)
+		Goto Super::Death
+	XDeath:
+		SPOS M 0 A_GiveToTarget("ExpItem", 8)
+		SPOS M 0 A_RadiusGive("ExpItem", 1600, RGF_PLAYERS|RGF_NOSIGHT|RGF_NOTARGET, 5)
+		Goto Super::XDeath
+	}
+}
+
+ACTOR ZSStealthZombieSarge : ZSZombieSarge
+{
+	+STEALTH
+	RenderStyle Translucent
+	Alpha 0
+	Obituary "$OB_STEALTHSHOTGUNGUY"
+	States
+	{
+	Death:
+		SPOS H 0 A_GiveToTarget("ExpItem", 8)
+		SPOS H 0 A_RadiusGive("ExpItem", 1600, RGF_PLAYERS|RGF_NOSIGHT|RGF_NOTARGET, 5)
+		Goto ShotgunGuy::Death
+	XDeath:
+		SPOS M 0 A_GiveToTarget("ExpItem", 16)
+		SPOS M 0 A_RadiusGive("ExpItem", 1600, RGF_PLAYERS|RGF_NOSIGHT|RGF_NOTARGET, 10)
+		Goto ShotgunGuy::XDeath
+	}
+}
+
+ACTOR ZSZombieCommando : ChaingunGuy
+{
+	DropItem "Chaingun" // Adding this to be edited later
+	States
+	{
+	Death:
+		CPOS H 0 A_GiveToTarget("ExpItem", 12)
+		CPOS H 0 A_RadiusGive("ExpItem", 1600, RGF_PLAYERS|RGF_NOSIGHT|RGF_NOTARGET, 7)
+		Goto Super::Death
+	XDeath:
+		CPOS O 0 A_GiveToTarget("ExpItem", 24)
+		CPOS O 0 A_RadiusGive("ExpItem", 1600, RGF_PLAYERS|RGF_NOSIGHT|RGF_NOTARGET, 14)
+		Goto Super::XDeath
+	}
+}
+
+ACTOR ZSStealthZombieCommando : ZSZombieCommando
+{
+	+STEALTH
+	RenderStyle Translucent
+	Alpha 0
+	Obituary "$OB_STEALTHCHAINGUY"
+	States
+	{
+	Death:
+		CPOS H 0 A_GiveToTarget("ExpItem", 18)
+		CPOS H 0 A_RadiusGive("ExpItem", 1600, RGF_PLAYERS|RGF_NOSIGHT|RGF_NOTARGET, 11)
+		Goto ChaingunGuy::Death
+	XDeath:
+		CPOS O 0 A_GiveToTarget("ExpItem", 36)
+		CPOS O 0 A_RadiusGive("ExpItem", 1600, RGF_PLAYERS|RGF_NOSIGHT|RGF_NOTARGET, 22)
+		Goto ChaingunGuy::XDeath
+	}
+}

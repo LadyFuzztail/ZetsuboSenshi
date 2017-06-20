@@ -1,0 +1,35 @@
+ACTOR ZSPinkie : Demon
+{
+// DropItem ""
+	States
+	{
+	Death:
+		SARG I 0 A_GivetoTarget("ExpItem", 10)
+		SARG I 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NoTarget, 6)
+		Goto Super::Death
+	}
+}
+
+ACTOR ZSPinkieSpectre : Spectre
+{
+// DropItem ""
+	States
+	{
+	Death:
+		SARG I 0 A_GivetoTarget("ExpItem", 12)
+		SARG I 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NoTarget, 7)
+		Goto Demon::Death
+	}
+}
+
+ACTOR ZSStealthPinkie : StealthDemon
+{
+// DropItem ""
+	States
+	{
+	Death:
+		SARG I 0 A_GivetoTarget("ExpItem", 16)
+		SARG I 0 A_RadiusGive("ExpItem", 1600, RGF_Players|RGF_NoSight|RGF_NoTarget, 10)
+		Goto Demon::Death
+	}
+}

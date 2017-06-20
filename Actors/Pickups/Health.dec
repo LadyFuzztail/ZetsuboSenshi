@@ -1,0 +1,69 @@
+// Replacing the Health Items with scripting
+
+ACTOR ZSHealthBonus : CustomInventory replaces HealthBonus
+{
+//	Radius 20
+//	Height 16
+	Inventory.PickupMessage "$GOTHTHBONUS"
+	+CountItem
+	+Inventory.AlwaysPickUp
+	States
+	{
+	Spawn:
+		BON1 ABCDCB 6
+		Loop
+	Pickup:
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupHealth",0,2,0)
+		Stop
+	}
+}
+
+ACTOR ZSHealthPack : ZSHealthBonus replaces Stimpack
+{
+//	Radius 20
+//	Height 16
+	Inventory.PickupMessage "$GOTSTIM"
+	States
+	{
+	Spawn:
+		STIM A -1
+		Stop
+	Pickup:
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupHealth",0,10,0)
+		Stop
+	}
+}
+
+ACTOR ZSHealthKit : ZSHealthBonus replaces Medikit
+{
+//	Radius 20
+//	Height 16
+	Inventory.PickupMessage "" //This will now be defined in scripts.
+//	Health.LowMessage 25, "$GOTMEDINEED"
+	States
+	{
+	Spawn:
+		MEDI A -1
+		Stop
+	Pickup:
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupHealth",0,25,1)
+		Stop
+	}
+}
+
+ACTOR ZSHealthKitLarge : ZSHealthBonus 2500
+{
+//	Radius 20
+//	Height 16
+	Inventory.PickupMessage ""
+//	Health.LowMessage 50, "Picked up a Large Medikit that you really need!"
+	States
+	{
+	Spawn:
+		MEDI A -1
+		Stop
+	Pickup:
+		TNT1 A 0 ACS_NamedExecuteAlways("PickupHealth",0,50,1)
+		Stop
+	}
+}

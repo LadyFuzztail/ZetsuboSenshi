@@ -1,0 +1,51 @@
+#library "ZS_Bonuses"
+#import "ZS_Constants.acs"
+#import "ZS_Functions.acs"
+#include "zcommon.acs"
+
+int allsecretsfound;
+int allmonsterskilled;
+int initialized;
+
+Script "InitiializeLevelStats" Open {
+		allsecretsfound = 0;
+		allmonsterskilled = 0;
+		initialized = 1;
+		ACS_NamedExecute("MonitorLevelStats",0);
+}		
+		
+Script "MonitorLevelStats" (void) {
+	int SecretsFound;
+	int OldSecretsFound;
+	int MonsterXPBonus;
+	int TotalSecrets;
+	SecretsFound = GetLevelInfo(LEVELINFO_FOUND_SECRETS);
+	TotalSecrets = GetLevelInfo(LEVELINFO_TOTAL_SECRETS);
+	int AllSecretsBonus = EXP_SCALE + ( TotalSecrets * sqrt(EXP_SCALE) * 2 );
+	
+	If ( !allsecretsfound && SecretsFound == GetLevelInfo(LEVELINFO_TOTAL_SECRETS) ) {
+		GiveInventory("ExpItem", AllSecretsBonus );
+		Print(s:"All secrets found! +", d:AllSecretsBonus, s:"xp");
+		allsecretsfound = 1;
+	}
+	
+	If ( !allmonsterskilled && GetLevelInfo(LEVELINFO_KILLED_MONSTERS) == GetLevelInfo(LEVELINFO_TOTAL_MONSTERS) ) {
+		MonsterXPBonus = ( GetLevelInfo(LEVELINFO_LEVELNUM) << 16 ) / 2 ;
+		MonsterXPBonus += ( GetLevelInfo(LEVELINFO_TOTAL_MONSTERS) << 16 ) / 2 ;
+		MonsterXPBonus >>= 16;
+		MonsterXPBonus += 16;
+		GiveInventory("ExpItem", MonsterXPBonus);
+		Print(s:"All monsters killed! +", d:MonsterXPBonus, s:"xp");
+		allmonsterskilled = 1;
+	}
+	
+	If ( SecretsFound > OldSecretsFound ) {
+		GiveInventory("ExpItem",16);
+		HudMessage(s:"Bonus +16xp";
+		HUDMSG_FADEOUT,1, CR_White, 0.5, 0.9, 1.0, 1.0);
+	}
+	
+	OldSecretsFound = SecretsFound;
+	Delay(1);
+	Restart;
+}
