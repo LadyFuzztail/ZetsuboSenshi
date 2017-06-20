@@ -19,3 +19,7 @@ Your goal is to get out of the Mars system alive with the suit and link up with 
 6. Make the mod presentable and visually striking
 7. Create maps for this mod
 8. Turn it into a standalone game running on the engine
+
+## Currently Working on
+* Creating Armor graphics to reflect the 3 tiers and 6 segments system for armor
+* Implement the 3 Tier 6 Segment Armor system
