@@ -1,1 +1,21 @@
 # ZetsuboSenshi
+## What is it?
+Zetsubo Senshi is an attempt at implementing elements of 90’s sci-fi anime into the game and present the game in a way that it looks like it was developed in Japan in the 90’s and early 2000’s. Think of the aesthetics of 90’s mecha anime, but with gameplay elements that close enough to feel like Doom, but not exactly Doom.
+ 
+You play as one of a few survivors following Hell’s incursion on Mars, you survived because you were part of a very small elite team chosen to test a new type of combat armor designed to take an incredible amount of punishment. This new series of prototype suits, called the Praetor suits, also houses a modular upgrade system which would allow the user to install and swap upgrades easily.
+ 
+Your goal is to get out of the Mars system alive with the suit and link up with the rest of the survivors back on the Earth system. You are likely to be sidetracked on the way back.
+
+## What will you need to run it?
+* GZDoom 3.1.0
+* (Will eventually be removed) Doom2.wad version 1.9
+
+## What will be added to this mod?
+1. Create a recharging shield and dynamic armor system.
+2. Add an experience system to gives you level ups and increases your stats.
+3. Create new weapons
+4. Create a mods system for the suits and weapons
+5. Give the suits precepts for triggerable abilities
+6. Make the mod presentable and visually striking
+7. Create maps for this mod
+8. Turn it into a standalone game running on the engine
