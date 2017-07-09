@@ -6,52 +6,64 @@ completeborder true;
 
 statusbar fullscreen, forcescaled|fullscreenoffsets
 {
-	drawimage "HPHUD", 4, 1;
+	drawimage "HPHUD", 4, -49;
 	drawimage "ANAHUD", -260,1;
-	drawimage "ABLEHUD", 4,-49;
+	drawimage "ABLEHUD", 4, 1;
 	drawimage "ARMSHUD", -196, -49;
+	drawimage "XPHUD", -128+center, -49;
 
 //	HP bar stuff	
-	drawbar "REDBRS", "HPBRES", health, horizontal, interpolate(8), 56, 22;
-	drawnumber 3, Corpfont, red, health, interpolate(8)|drawshadow, 106, 0;
+	drawbar "REDBRS", "HPBRES", health, horizontal, interpolate(8), 52, -27;
+	drawnumber 3, Corpfont, red, health, interpolate(8)|drawshadow, 102, -50;
 	InInventory OverShieldToken, 1 {
-		Drawimage "LITBRS", 120, 22;
+		Drawimage "LITBRS", 116, -27;
+		drawnumber 3, Corpfont, cyan, armor, interpolate(8)|drawshadow, 166, -50;
 	}
 	Else {
-		drawbar "BLUBRS", "SHLDBRS", armor (25), Horizontal, interpolate(8), 120, 22;
+		drawbar "BLUBRS", "SHLDBRS", armor (25), Horizontal, interpolate(8), 116, -27;
+		drawnumber 3, Corpfont, TrueBlue, armor, interpolate(8)|drawshadow, 166, -50;
 	}
-	drawnumber 3, Corpfont, TrueBlue, armor, interpolate(8)|drawshadow, 170, 0, TrueBlue, 25, cyan, 25;
-	drawbar "ACBRS", "ACBRES", ArmorPercentCounter, horizontal, interpolate(8), 52, 42;
-	drawnumber 2, corpfont, gold, ArmorClassCounter, drawshadow, 118, 20;
-	drawnumber 3, cfontsml, gold, ZSDefensePercent, interpolate(6)|DrawShadow, 144, 30;
-	drawstring cfontsml, gold, "%", 154, 30, 0, drawshadow;
+	drawbar "ACBRS", "ACBRES", ArmorPercentCounter, horizontal, interpolate(8), 56, -7;
+	drawnumber 2, corpfont, gold, ArmorClassCounter, drawshadow, 122, -30;
+	drawnumber 3, cfontsml, gold, ZSDefensePercent, interpolate(6)|DrawShadow, 148, -20;
+	drawstring cfontsml, gold, "%", 158, -20, 0, drawshadow;
+
+// Keys Stuff
+	drawswitchableimage keyslot 1, "STKCARDN", "STKCARDR", -88, 56;
+	drawswitchableimage keyslot 2, "STKCARDN", "STKCARDB", -32, 56;
+	drawswitchableimage keyslot 3, "STKCARDN", "STKCARDY", -60, 56;
+	Alpha 0.75 {
+		drawswitchableimage keyslot 4, "STKSKULN", "STKSKULR", -172, 56;
+		drawswitchableimage keyslot 5, "STKSKULN", "STKSKULB", -116, 56;
+		drawswitchableimage keyslot 6, "STKSKULN", "STKSKULY", -144, 56;
+	}
 	
-// Analytics bar stuff
-	drawbar "WHTBRLFS", "WHTBRLES", ExpPercent, horizontal, reverse|interpolate(8), -184, 42;
-	drawnumber 5, cfontsml, untranslated, expitem, interpolate(256)|drawshadow, -114, 30;
-	drawstring cfontsml, untranslated, "/", -104, 30, 0, drawshadow;
-	drawnumber 5, cfontsml, untranslated, ExpNext, interpolate(128)|drawshadow, -58, 30;
-	drawnumber 2, Sfontbig, untranslated, ExpLv, -8, 25;
-	drawbar "WHTBRSFS", "WHTBRSES", kills, horizontal, reverse|interpolate(8), -127, 13;
-	drawnumber 4, cfontsml, untranslated, kills, interpolate(8)|drawshadow, -104, 1;
-	drawstring cfontsml, untranslated, "/", -96, 1, 0, drawshadow;
-	drawnumber 4, cfontsml, untranslated, monsters, interpolate(32)|drawshadow, -62, 1;
-	drawbar "WHTBRSFS", "WHTBRSES", secrets, horizontal, reverse|interpolate(8), -125, 22;
-	drawnumber 2, cfontsml, untranslated, secrets, interpolate(8)|drawshadow, -84, 11;
-	drawstring cfontsml, untranslated, "/", -76, 11, 0, drawshadow;
-	drawnumber 2, cfontsml, untranslated, totalsecrets, interpolate(8)|drawshadow, -60, 11;
+// Map Analytics stuff
+	drawbar "WHTBRLFS", "WHTBRLES", kills, horizontal, reverse|interpolate(8), -185, 43;
+	drawnumber 4, cfontsml, untranslated, kills, interpolate(8)|drawshadow, -98, 30;
+	drawstring cfontsml, untranslated, "/", -90, 30, 0, drawshadow;
+	drawnumber 4, cfontsml, untranslated, monsters, interpolate(32)|drawshadow, -56, 30;
+	drawbar "WHTBRSFS", "WHTBRSES", secrets, horizontal, reverse|interpolate(8), -125, 23;
+	drawnumber 2, cfontsml, untranslated, secrets, interpolate(8)|drawshadow, -84, 10;
+	drawstring cfontsml, untranslated, "/", -76, 10, 0, drawshadow;
+	drawnumber 2, cfontsml, untranslated, totalsecrets, interpolate(8)|drawshadow, -60, 10;
 	InInventory IsUltDoom, 1 {
 		drawstring cmapfont, untranslated, levellump, -192, 0, 0, alignment(left)|drawshadow;
 	} else {
 		drawstring cma2font, untranslated, levellump, -192, 0, 0, alignment(left)|drawshadow;
 	}
 	Alpha 0.857143 {
-		drawstring cfontsml, untranslated, levelname, -256, 21, 0, alignment(left)|drawshadow;
+		drawstring cfontsml, untranslated, levelname, -128, 20, 0, drawshadow;
 	}
+
+// XP Analytics Stuff
+	drawbar "XPBRS", "XPBES", ExpPercent, horizontal, interpolate(16), -128+center, -30;
+	drawnumber 2, corpfont, untranslated, ExpLv, drawshadow, -50+center, -51;
+
 // Arms bar stuff
 	UsesAmmo {
 		drawbar "WHTBRLFS", "WHTBRLES", ammo1, horizontal, reverse|interpolate(25), -184, -7;
-		drawnumber 4, corpfont, untranslated, ammo1, interpolate(25)|drawshadow, -52, -31;
+		drawnumber 4, corpfont, untranslated, ammo1, interpolate(25)|drawshadow, -52, -30;
 	}
 	drawstring cfontsml, untranslated, weapontag, -86, -43, 0, drawshadow;
 }
@@ -70,8 +82,8 @@ statusbar normal // Standard Doom Status bar
     drawnumber 3, HUDFONT_DOOM, untranslated, realarmor, interpolate(8), 379, 451;
 	drawstring smallfont, gold, "Def% ", 378, 462;
 	drawnumber 2, smallfont, gold, ZSDefensePercent, interpolate(6), 390, 462;
-	drawstring sfontsml, untranslated, "The quick brown fox jumps over the lazy dog.", 318, 16, 0,alignment(center);
-	drawstring sfontsml, cyan, "1234567890", 318, 32, 0,alignment(center);
+//	drawstring sfontsml, untranslated, "The quick brown fox jumps over the lazy dog.", 318, 16, 0,alignment(center);
+//	drawstring sfontsml, cyan, "1234567890", 318, 32, 0,alignment(center);
 	
 	Alpha 0.75
 	{
