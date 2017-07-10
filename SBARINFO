@@ -81,7 +81,7 @@ statusbar normal // Standard Doom Status bar
 	drawnumber 6, smallfont, gold, ExpItem, fillzeros|interpolate(8), 259, 439;
     drawnumber 3, HUDFONT_DOOM, untranslated, realarmor, interpolate(8), 379, 451;
 	drawstring smallfont, gold, "Def% ", 378, 462;
-	drawnumber 2, smallfont, gold, ZSDefensePercent, interpolate(6), 390, 462;
+	drawnumber 2, smallfont, gold, ZSDefensePercent, interpolate(8), 390, 462;
 //	drawstring sfontsml, untranslated, "The quick brown fox jumps over the lazy dog.", 318, 16, 0,alignment(center);
 //	drawstring sfontsml, cyan, "1234567890", 318, 32, 0,alignment(center);
 	
