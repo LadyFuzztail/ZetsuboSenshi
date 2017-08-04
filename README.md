@@ -23,6 +23,7 @@ Your goal is to get out of the Mars system alive with the suit and link up with 
 ## Currently Working on
 * Creating Armor graphics to reflect the 3 tiers and 6 segments system for armor
 * Implement the 3 Tier 6 Segment Armor system
+* Implement melee combos and multipliers
 * Add a basic precept ability
 * Move the BFG to Omega Precept
 * Modify enemies to drop energy charges
