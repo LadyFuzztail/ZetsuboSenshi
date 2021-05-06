@@ -12,5 +12,7 @@ ACTOR DefaultClass : DoomPlayer
 	Player.StartItem "Pistol"
 	Player.StartItem "Fist"
 	Player.StartItem "Clip", 50
+	Player.StartItem "ShieldMaxTotal", 50
+	Player.StartItem "ArmorMaxTotal", 100
 	Player.StartItem "OverShieldMax", 200
 }

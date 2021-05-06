@@ -14,14 +14,14 @@ statusbar fullscreen, forcescaled|fullscreenoffsets
 
 //	HP bar stuff	
 	drawbar "REDBRS", "HPBRES", health, horizontal, interpolate(8), 52, -27;
-	drawnumber 3, Corpfont, red, health, interpolate(8)|drawshadow, 102, -50;
+	drawnumber 3, Corpfont, red, health, interpolate(8)|drawshadow, 110, -50;
 	InInventory OverShieldToken, 1 {
 		Drawimage "LITBRS", 116, -27;
-		drawnumber 3, Corpfont, cyan, armor, interpolate(8)|drawshadow, 166, -50;
+		drawnumber 3, Corpfont, cyan, armor, interpolate(8)|drawshadow, 174, -50;
 	}
 	Else {
-		drawbar "BLUBRS", "SHLDBRS", armor (25), Horizontal, interpolate(8), 116, -27;
-		drawnumber 3, Corpfont, TrueBlue, armor, interpolate(8)|drawshadow, 166, -50;
+		drawbar "BLUBRS", "SHLDBRS", armor (ShieldMaxTotal), Horizontal, interpolate(8), 116, -27;
+		drawnumber 3, Corpfont, TrueBlue, armor, interpolate(8)|drawshadow, 174, -50;
 	}
 	drawbar "ACBRS", "ACBRES", ArmorPercentCounter, horizontal, interpolate(8), 56, -7;
 	drawnumber 2, corpfont, gold, ArmorClassCounter, drawshadow, 122, -30;

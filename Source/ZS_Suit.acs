@@ -101,12 +101,18 @@ Script "ShieldGating" Enter {
 }
 
 // Adds Armor to the give stack
-Script "PickupArmor" (int amount) {	
-	int MaxArmor = GetMaxArmor();
-	ArmorToGive[PlayerNumber()] += amount;
-	if ( ArmorToGive[PlayerNumber()] > MaxArmor ) {
-		ArmorToGive[PlayerNumber()] = MaxArmor;
+Script "PickupArmor" (int amount, int type) {
+	int MaxArmor = GetMaxArmor();	
+	If ( type == 1 ) {
+		int UpperBound;
+		int ExpBonus;
+		UpperBound = ( MaxArmor / 2 ) - CheckInventory("RealArmor");
+		UpperBound = clamp(UpperBound,0,100);
+		ExpBonus = (amount - Upperbound) * 2;
+		GiveInventory("ExpItem",ExpBonus);
+		amount = clamp(amount,0,UpperBound);
 	}
+	ArmorToGive[PlayerNumber()] += amount;
 }
 
 // Gives Armor from the stack
@@ -116,6 +122,9 @@ Script "ArmorGiver" Enter {
 		TakeInventory("IDFAFlag", 1);
 	} else If ( CheckInventory("RealArmor") < GetMaxArmor() && !!ArmorToGive[PlayerNumber()] ) {
 			GiveInventory("RealArmor",1);
+			--ArmorToGive[PlayerNumber()];
+		} else If (!!ArmorToGive[PlayerNumber()]) {
+			GiveInventory("ExpItem",2);
 			--ArmorToGive[PlayerNumber()];
 		} else {
 			ArmorToGive[PlayerNumber()] = 0;
@@ -185,7 +194,7 @@ Script "HealthGiver" Enter {
 			GiveInventory("Health",1);
 			--HealthToGive[PlayerNumber()];
 		} else {
-			RedirectTics += 25;
+			RedirectTics += 60;
 			ShieldRedirectAmount = RedirectTics / 100;
 			ShieldstoGive[PlayerNumber()] += ShieldRedirectAmount;
 			RedirectTics = RedirectTics % 100;
@@ -207,30 +216,94 @@ Script "ExpSystem" Enter {
 	int PlayerNextLevel;
 	int PlayerNextPercent;
 	int PlayerNextProgress;
+	int HealthUpgrades;
+	int ShieldUpgrades;
+	int MaxShields;
+	int ArmorUpgrades;
+	int MaxArmor;
+	int PreceptUpgrades;
+	int MaxPrecept;
+	int CapReached;
 	PlayerExp = CheckInventory("ExpItem");
 	PlayerNextLevel = CheckInventory("ExpNext");
-	If ( PlayerExp != PlayerExpOld ){
+	If ( PlayerExp != PlayerExpOld && !CapReached ){
 		PlayerLv = sqrt( PlayerExp / EXP_SCALE );
-		While ( PlayerLv > CheckInventory("ExpLv") ) {
-			GiveInventory("ExpLv", 1);
-		}
-		PlayerNextProgress = CheckInventory("ExpItem") - ( CheckInventory("ExpLv")*CheckInventory("ExpLv") * EXP_SCALE);
-		PlayerNextPercent = ( PlayerNextProgress * 256 ) / ( ( 2 * CheckInventory("ExpLv") + 1) * EXP_SCALE );
-		While ( PlayerNextPercent > CheckInventory("ExpPercent")) {
-			GiveInventory("ExpPercent",1);
-		}
-		While ( PlayerNextPercent < CheckInventory("ExpPercent")) {
-			TakeInventory("ExpPercent",1);
+		If ( PlayerLv < LV_CAP ) {
+			While ( PlayerLv > CheckInventory("ExpLv") ) {
+				GiveInventory("ExpLv", 1);
+			}
+			PlayerNextProgress = CheckInventory("ExpItem") - ( CheckInventory("ExpLv")*CheckInventory("ExpLv") * EXP_SCALE);
+			PlayerNextPercent = ( PlayerNextProgress * 256 ) / ( ( 2 * CheckInventory("ExpLv") + 1) * EXP_SCALE );
+			While ( PlayerNextPercent > CheckInventory("ExpPercent")) {
+				GiveInventory("ExpPercent",1);
+			}
+			While ( PlayerNextPercent < CheckInventory("ExpPercent")) {
+				TakeInventory("ExpPercent",1);
+			}
+		} Else {
+			PlayerLv = LV_CAP;
+			PlayerExp = LV_CAP * LV_CAP * EXP_SCALE;
+			While ( CheckInventory("ExpLV") < LV_CAP ) {
+				GiveInventory("ExpLv", 1);
+			}
+			While ( PlayerExp < CheckInventory("ExpItem") ) {
+				TakeInventory("ExpItem", 1);
+			}
+			PlayernextPercent = 0;
+			While ( PlayerNextPercent < CheckInventory("ExpPercent")) {
+				TakeInventory("ExpPercent",1);
+			}
+			CapReached = 1;
 		}
 	}
-	PlayerNextLevel = (PlayerLv * PlayerLv + 2 * PlayerLv + 1) * EXP_SCALE;
-	While ( PlayerNextLevel > CheckInventory("ExpNext")) {
-		GiveInventory("ExpNext",1);
+	
+	If ( !CapReached ) {
+		PlayerNextLevel = (PlayerLv * PlayerLv + 2 * PlayerLv + 1) * EXP_SCALE;
+		While ( PlayerNextLevel > CheckInventory("ExpNext")) {
+			GiveInventory("ExpNext",1);
+		}
+		While ( PlayerNextLevel < CheckInventory("ExpNext")) {
+			TakeInventory("ExpNext",1);
+		}
+	} else {
+		PlayerNextLevel = 0;
+		While ( PlayerNextLevel < CheckInventory("ExpNext")) {
+			TakeInventory("ExpNext",1);
+		}
 	}
-	While ( PlayerNextLevel < CheckInventory("ExpNext")) {
-		TakeInventory("ExpNext",1);
+	
+	HealthUpgrades = (PlayerLv + 2)/3;
+	ShieldUpgrades = (PlayerLv + 1)/3;
+	ArmorUpgrades = PlayerLv /6;
+	If ( HealthUpgrades > CheckInventory("HealthUpgrades") ) {
+		GiveInventory("HealthUpgrades",1);
+		SetActorProperty(0,APROP_SpawnHealth,100+(20*CheckInventory("HealthUpgrades")));
+		SetActorProperty(0,APROP_Health,100+(20*CheckInventory("HealthUpgrades")));
 	}
+	If ( ShieldUpgrades > CheckInventory("ShieldUpgrades") ) {
+		GiveInventory("ShieldUpgrades",1);
+		MaxShields = 50 + (10*CheckInventory("ShieldUpgrades"));
+		While ( CheckInventory("ShieldMaxTotal") < MaxShields ) {
+			GiveInventory("ShieldMaxTotal",5);
+		}
+		While ( CheckInventory("Armor") < MaxShields) {
+			GiveInventory("ShieldArmor", 1);
+		}
+	}
+	If ( ArmorUpgrades > CheckInventory("ArmorUpgrades") ) {
+		GiveInventory("ArmorUpgrades",1);
+		MaxArmor = 100 + (50*CheckInventory("ArmorUpgrades"));
+		While ( CheckInventory("ArmorMaxTotal") < MaxArmor ) {
+			GiveInventory("ArmorMaxTotal",50);
+		}
+		While ( CheckInventory("RealArmor") < ( MaxArmor / 2 ) ) {
+			GiveInventory("RealArmor", 1);
+		}
+	}
+	
 	PlayerExpOld = PlayerExp;
+//	HudMessage(s:"MaxHealth: ", d:GetMaxHealth(), s:" ( ",d:GetActorProperty(0,APROP_SpawnHealth), s:") | Upgrades: ", d:HealthUpgrades;
+//	HUDMSG_FADEOUT, 1, CR_WHITE, 0.5, 0.9, 1.0, 0.95);
 	Delay(1);
 	Restart;
 }

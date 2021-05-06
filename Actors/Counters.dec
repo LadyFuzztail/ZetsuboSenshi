@@ -4,6 +4,7 @@ ACTOR ZSDefensePercent : Counter { Inventory.MaxAmount 99 Inventory.InterhubAmou
 ACTOR ExpItem : Counter { Inventory.MaxAmount 0x7FFFFFFF Inventory.InterhubAmount 0x7FFFFFFF }
 ACTOR HealthMaxTotal : Counter { Inventory.MaxAmount 999 Inventory.InterHubAmount 999 }
 ACTOR ShieldRecharged : Counter { Inventory.MaxAmount 1 Inventory.InterHubAmount 1 }
+ACTOR ShieldMaxTotal : Counter { Inventory.MaxAmount 999 Inventory.InterHubAmount 999 }
 ACTOR OverShieldToken : Counter { Inventory.MaxAmount 1 Inventory.InterhubAmount 1 }
 ACTOR OverShieldCounter : Counter { Inventory.MaxAmount 999 Inventory.InterHubAmount 999 }
 ACTOR OverShieldMax : Counter { Inventory.MaxAmount 999 Inventory.InterHubAmount 999 }
@@ -20,3 +21,7 @@ ACTOR PreceptPercent : Counter { Inventory.MaxAmount 256 Inventory.InterHubAmoun
 ACTOR IsUltDoom : Counter { Inventory.MaxAmount 1 Inventory.InterhubAmount 1 }
 ACTOR IsDoom2 : Counter { Inventory.MaxAmount 1 Inventory.InterhubAmount 1 }
 ACTOR IDFAFlag : Counter { Inventory.MaxAmount 1 Inventory.InterhubAmount 1 }
+ACTOR HealthUpgrades : Counter { Inventory.MaxAmount 50 Inventory.InterHubAmount 50 }
+ACTOR ShieldUpgrades : Counter { Inventory.MaxAmount 50 Inventory.InterHubAmount 50 }
+ACTOR ArmorUpgrades : Counter { Inventory.MaxAmount 50 Inventory.InterHubAmount 50 }
+ACTOR PreceptUpgrades : Counter { Inventory.MaxAmount 50 Inventory.InterHubAmount 50 }

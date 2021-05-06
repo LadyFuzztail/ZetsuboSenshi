@@ -17,7 +17,7 @@ function int clamp (int x, int y, int z) {
 
 // Retrieve the max shields of a player 
 function int GetMaxShields (void){
-	int ShieldsMax = 25;
+	int ShieldsMax = CheckInventory("ShieldMaxTotal");
 	Return ShieldsMax;
 }
 
@@ -30,20 +30,20 @@ function int GetOverShieldLimit (void){
 
 // Retrieve the max armor of a player 
 function int GetMaxArmor (void){
-	int ArmorMax = 100;
+	int ArmorMax = CheckInventory("ArmorMaxTotal");
 	Return ArmorMax;
 }
 
 // Update Damage Factor from Armor
 function void UpdateDamageFactor (void) {
 	int CurrentArmor = CheckInventory("RealArmor");
-	int CurrentDamageFactor = 100.0 / (100 + CurrentArmor) ;
+	int CurrentDamageFactor =  200.0 / (100 + CurrentArmor) ;
 	if ( !!CheckInventory("ArmorActive") ) {
 		SetActorProperty(0, APROP_DamageFactor, CurrentDamageFactor);
 	} else {
-		SetActorProperty(0, APROP_DamageFactor, 1.0);
+		SetActorProperty(0, APROP_DamageFactor, 2.0);
 	}
-	int DefensePercent = ( 100.0 - ( 100 * CurrentDamagefactor - 0.5)) >> 16;
+	int DefensePercent = ( 100.0 - ( 100 * (CurrentDamagefactor * 1 / 2) - 0.5)) >> 16;
 	int PercentToUpdate;
 	if ( DefensePercent < CheckInventory("ZSDefensePercent") ) {
 		TakeInventory("ZSDefensePercent",1);
@@ -57,12 +57,52 @@ function void UpdateDamageFactor (void) {
 function void DamageArmor (int amount) {
 	int fixedamount = amount << 16;
 	int factor = GetActorProperty(0,APROP_DamageFactor);
-	int ApproxRawDamage = FixedDiv(fixedamount,factor);
-	int ArmorDamageFactor = ( CheckInventory("RealArmor") << 16 ) / GetMaxArmor();
-	int ArmorDamageAmount = FixedMul(ApproxRawDamage, ArmorDamageFactor) * 2 / 5;
-	ArmorDamageAmount = ArmorDamageAmount >> 16;
-	If ( ArmorDamageAmount <= 0 ) {
-		ArmorDamageAmount = 1;
+	int ApproxRawDamage = FixedDiv(fixedamount,factor) >> 16;
+	int ArmorDamageAmount = 1;
+	If ( ApproxRawDamage >= 10 ) {
+		ArmorDamageAmount = 5;
+	}
+	If ( ApproxRawDamage >= 20 ) {
+		ArmorDamageAmount = 10;
+	}
+	If ( ApproxRawDamage >= 30 ) {
+		ArmorDamageAmount = 15;
+	}
+	If ( ApproxRawDamage >= 40 ) {
+		ArmorDamageAmount = 20;
+	}
+	If ( ApproxRawDamage >= 50 ) {
+		ArmorDamageAmount = 25;
+	}
+	If ( ApproxRawDamage >= 60 ) {
+		ArmorDamageAmount = 35;
+	}
+	If ( ApproxRawDamage >= 70 ) {
+		ArmorDamageAmount = 45;
+	}
+	If ( ApproxRawDamage >= 80 ) {
+		ArmorDamageAmount = 55;
+	}
+	If ( ApproxRawDamage >= 90 ) {
+		ArmorDamageAmount = 65;
+	}
+	If ( ApproxRawDamage >= 100 ) {
+		ArmorDamageAmount = 75;
+	}
+	If ( ApproxRawDamage >= 125 ) {
+		ArmorDamageAmount = 95;
+	}
+	If ( ApproxRawDamage >= 150 ) {
+		ArmorDamageAmount = 125;
+	}
+	If ( ApproxRawDamage >= 200 ) {
+		ArmorDamageAmount = 190;
+	}
+	If ( ApproxRawDamage >= 300 ) {
+		ArmorDamageAmount = 295;
+	}
+	If ( ApproxRawDamage >= 400 ) {
+		ArmorDamageAmount = ((ApproxRawDamage+2)/5)*5;
 	}
 	TakeInventory("RealArmor", ArmorDamageAmount);
 	UpdateDamageFactor();
@@ -71,8 +111,5 @@ function void DamageArmor (int amount) {
 // Retrieves Max Health
 function int GetMaxHealth (void) {
 	int HealthMax = GetActorProperty(0,APROP_SpawnHealth);
-	If ( !HealthMax ) {
-		HealthMax = 100;
-	}	
 	return HealthMax;
 }

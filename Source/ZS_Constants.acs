@@ -1,7 +1,8 @@
 #library "ZS_Constants"
 #include "zcommon.acs"
 
-#LibDefine 	EXP_SCALE	32
+#LibDefine	LV_CAP		30
+#LibDefine 	EXP_SCALE	48
 #LibDefine	GAME_DOOM	1
 #LibDefine	GAME_DOOM2	2
 
